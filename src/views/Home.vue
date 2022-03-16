@@ -1,16 +1,18 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Mi proyecto en Vue (TODO-App)"/>
+  <div class="home container">
+    <SearchAndFilter />
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+import SearchAndFilter from '@/components/SearchAndFilter.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    SearchAndFilter
   }
 }
 </script>
+
+// contiene: searchAndFilter, boton +, cards de notas
