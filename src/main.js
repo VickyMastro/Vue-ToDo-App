@@ -3,7 +3,40 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+// Autoimportacion de componentes
+
+import {upperFirst, camelCase} from 'lodash';
+
+const requireComponent = require.context(
+  './components',
+  false,
+  /Base[A-Z]\w+\.(vue|js)$/
+)
+
+requireComponent.keys().forEach(fileName => {
+  const componentConfig = requireComponent(fileName)
+
+  const componentName = upperFirst(
+    camelCase(
+      fileName
+        .split('/')
+        .pop()
+        .replace(/\.\w+$/, '')
+    )
+  )
+
+  Vue.component(
+    componentName,
+    componentConfig.default || componentConfig
+  )
+});
+
+// Bootstrap Vue
+import 'bootstrap' 
+import 'bootstrap/dist/css/bootstrap.css'
+
 
 new Vue({
   router,
