@@ -37,6 +37,8 @@ requireComponent.keys().forEach(fileName => {
 import 'bootstrap' 
 import 'bootstrap/dist/css/bootstrap.css'
 
+import VModal from 'vue-js-modal'
+Vue.use(VModal)
 
 new Vue({
   router,

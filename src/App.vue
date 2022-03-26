@@ -20,5 +20,6 @@
     #ffcc70 100%
   );
   height: 100vh;
+  overflow-x: hidden;
 }
 </style>
