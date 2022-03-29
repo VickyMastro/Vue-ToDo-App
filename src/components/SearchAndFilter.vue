@@ -1,10 +1,7 @@
 // filtros: prioridad, fecha, completo o incompleto
 <template>
   <div>
-    <h2 class="text-center pt-3 fs-1" style="text-decoration: underline">
-      Notas
-    </h2>
-    <div class="row">
+    <div class="row mt-3">
       <div
         class="
           col-sm-12 col-md-6
@@ -36,13 +33,12 @@
           <option value="toDo">ToDo</option>
         </select>
       </div>
-      <pre> {{$data}} </pre>
     </div>
   </div>
 </template>
 
 <script>
-import ModalNote from "@/components/ModalNote.vue";
+import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
 import ModalToDo from "@/components/ModalToDo.vue";
 
 export default {
@@ -72,7 +68,7 @@ export default {
   },
   methods: {
     openModalNota() {
-      this.$modal.show(ModalNote, null, {
+      this.$modal.show(CreateNoteModal, null, {
         adaptive: true,
         width:"90%",
         maxWidth: 776,
