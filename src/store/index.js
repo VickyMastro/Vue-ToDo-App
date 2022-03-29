@@ -11,9 +11,13 @@ const store = new Vuex.Store({
 
   getters:{
     // funciones que devuelven valor/es del estado
-    doneNotes(state) {
-        return state.allNotes;
+    getNotes(state) {
+      return state.allNotes;
     },
+
+    getNoteId: (state) => (id) =>{
+      return state.allNotes.find(note=> note.id === id)
+    }
   },
 
   mutations: {
@@ -29,7 +33,25 @@ const store = new Vuex.Store({
 
   actions: {
     // funcion que hace algo antes de hacer una mutación
-    addNote(context, note){
+    editNote(context, note){
+      console.log(note)
+      const notes = context.state.allNotes;
+      const index = notes.findIndex(n=> n.id === note.id)
+      
+      notes.splice(index, 1, note)
+
+      context.commit('setNotes', notes)
+
+      const newNotes= JSON.stringify(context.state.allNotes)
+      window.localStorage.setItem('notes', newNotes)
+    },
+
+    addNote(context,note){
+      const notes = context.state.allNotes;
+      const lastNote= notes[notes.length - 1]
+
+      note.id =  notes.length === 0 ? 1 : lastNote.id + 1
+
       context.commit('setNote', note)
 
       const newNotes= JSON.stringify(context.state.allNotes)
@@ -38,7 +60,8 @@ const store = new Vuex.Store({
     },
     
     passNotes(context){
-      const notes= JSON.parse(window.localStorage.getItem('notes'))
+      let notes= JSON.parse(window.localStorage.getItem('notes'))
+      notes = notes ?? []
 
       context.commit('setNotes', notes)
     }
