@@ -48,7 +48,6 @@ export default {
     },
 
     setValue(name, value) {
-        console.log("value");
       this.formData[name] = value;
     },
   },

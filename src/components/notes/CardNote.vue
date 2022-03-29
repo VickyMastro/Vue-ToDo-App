@@ -1,7 +1,12 @@
 <template>
   <div class="col-sm-12 col-md-4 my-3">
     <div class="card">
-      <div class="card-header">{{ note.date }}</div>
+      <div class="card-header">
+        {{ note.date }}
+        <button class="delete-button" @click="deleteNote">
+          <img src="../../assets/delete.png" alt="" width="20px" height="20px" />
+        </button>
+      </div>
       <div class="card-body">
         <h5 class="card-title">
           <b>
@@ -18,7 +23,7 @@
 </template>
 
 <script>
-import EditNoteModalVue from './EditNoteModal.vue';
+import EditNoteModal from "./EditNoteModal.vue";
 
 export default {
   name: "CardNote",
@@ -26,7 +31,7 @@ export default {
   methods: {
     editNote() {
       this.$modal.show(
-        EditNoteModalVue,
+        EditNoteModal,
         {
           id: this.note.id,
         },
@@ -38,6 +43,9 @@ export default {
         }
       );
     },
+    deleteNote(){   
+      this.$store.dispatch("deleteNote", this.note.id)
+    }
   },
 };
 </script>
@@ -47,9 +55,17 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border: #c850c0;
 }
+
 .card-header {
   background: #c850c0;
   color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button{
+  background: inherit;
+  border: none;
 }
 
 a {

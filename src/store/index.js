@@ -33,8 +33,19 @@ const store = new Vuex.Store({
 
   actions: {
     // funcion que hace algo antes de hacer una mutación
+    deleteNote(context, id){
+      const notes = context.state.allNotes;
+      const index = notes.findIndex(n=> n.id === id)
+      
+      notes.splice(index, 1)
+
+      context.commit('setNotes', notes)
+      
+      const newNotes= JSON.stringify(context.state.allNotes)
+      window.localStorage.setItem('notes', newNotes)
+    },
+    
     editNote(context, note){
-      console.log(note)
       const notes = context.state.allNotes;
       const index = notes.findIndex(n=> n.id === note.id)
       
