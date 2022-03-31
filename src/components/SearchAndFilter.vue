@@ -18,11 +18,19 @@
         />
 
         <button class="btn-grad">
-          <img src="../assets/filter.png" alt="Boton para filtrar" width="20px" height="20px" />
+          <img
+            src="../assets/filter.png"
+            alt="Boton para filtrar"
+            width="20px"
+            height="20px"
+          />
         </button>
       </div>
-      
-      <div class="col-sm-12 col-md-4 d-flex justify-content-center" v-if="!isMobile">
+
+      <div
+        class="col-sm-12 col-md-4 d-flex justify-content-center"
+        v-if="!isMobile"
+      >
         <select
           class="form-select d-flex btn-grad"
           v-model="optionSelect"
@@ -33,10 +41,15 @@
           <option value="toDo">ToDo</option>
         </select>
       </div>
-      
+
       <div v-else>
         <button class="btn-phone" @click="options">
-          <img src="../assets/mas.png" alt="Boton para agregar una nota" width="20px" height="20px" />
+          <img
+            src="../assets/mas.png"
+            alt="Boton para agregar una nota"
+            width="20px"
+            height="20px"
+          />
         </button>
       </div>
     </div>
@@ -47,7 +60,6 @@
 import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
 import ModalToDo from "@/components/todos/ModalToDo.vue";
 import ModalOptions from "@/components/ModalOptions.vue";
-
 
 export default {
   name: "SearchAndFilter",
@@ -73,12 +85,16 @@ export default {
       }
       this.optionSelect = "";
     },
+
+    text(newValue){
+      this.$store.dispatch("addSearchFilter", newValue);
+    },
   },
   methods: {
     openModalNota() {
       this.$modal.show(CreateNoteModal, null, {
         adaptive: true,
-        width:"90%",
+        width: "90%",
         maxWidth: 776,
         height: "80%",
       });
@@ -90,15 +106,14 @@ export default {
         height: "90%",
       });
     },
-    options(){
+    options() {
       this.$modal.show(ModalOptions, null, {
         adaptive: true,
         width: "250px",
         height: "53px",
         styles: "background: rgba(0, 0, 0, 0.07); border-radius: 8px",
-      })
+      });
     },
-
   },
 };
 </script>
@@ -134,17 +149,12 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.btn-phone{
+.btn-phone {
   height: 64px;
   width: 64px;
   margin: 10px;
-  background: linear-gradient(
-    43deg,
-    #4158d0 0%,
-    #c850c0 46%,
-    #ffcc70 100%
-  );;
- 
+  background: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+
   border: none;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
