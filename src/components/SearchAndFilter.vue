@@ -18,11 +18,11 @@
         />
 
         <button class="btn-grad">
-          <img src="../assets/filter.png" alt="" width="20px" height="20px" />
+          <img src="../assets/filter.png" alt="Boton para filtrar" width="20px" height="20px" />
         </button>
       </div>
-      <!-- v-if="!isMobile" ESTO VA BAJO ESTA CLASE -->
-      <div class="col-sm-12 col-md-4 d-flex justify-content-center">
+      
+      <div class="col-sm-12 col-md-4 d-flex justify-content-center" v-if="!isMobile">
         <select
           class="form-select d-flex btn-grad"
           v-model="optionSelect"
@@ -33,13 +33,21 @@
           <option value="toDo">ToDo</option>
         </select>
       </div>
+      
+      <div v-else>
+        <button class="btn-phone" @click="options">
+          <img src="../assets/mas.png" alt="Boton para agregar una nota" width="20px" height="20px" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
-import ModalToDo from "@/components/ModalToDo.vue";
+import ModalToDo from "@/components/todos/ModalToDo.vue";
+import ModalOptions from "@/components/ModalOptions.vue";
+
 
 export default {
   name: "SearchAndFilter",
@@ -82,6 +90,15 @@ export default {
         height: "90%",
       });
     },
+    options(){
+      this.$modal.show(ModalOptions, null, {
+        adaptive: true,
+        width: "250px",
+        height: "53px",
+        styles: "background: rgba(0, 0, 0, 0.07); border-radius: 8px",
+      })
+    },
+
   },
 };
 </script>
@@ -115,5 +132,27 @@ export default {
   border: none;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.btn-phone{
+  height: 64px;
+  width: 64px;
+  margin: 10px;
+  background: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );;
+ 
+  border: none;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+
+  z-index: 1;
 }
 </style>
