@@ -13,7 +13,7 @@
             {{ note.title }}
           </b>
         </h5>
-        <p class="card-text">{{ note.desc }}</p>
+        <p class="card-text">{{ note.desc | caracteres}}</p>
         <div class="text-end">
           <a href="#" class="btn" @click="editNote">Editar</a>
         </div>
@@ -46,6 +46,16 @@ export default {
     deleteNote(){   
       this.$store.dispatch("deleteNote", this.note.id)
     }
+  },
+  filters:{
+    caracteres : function (description){
+      if (description.length > 70) {
+        return description.substring(0,70) + '...'
+        
+      }else{
+        return description
+      }
+    },
   },
 };
 </script>
