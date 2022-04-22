@@ -23,7 +23,7 @@
 
 <script>
 import CreateNoteModal from "../components/notes/CreateNoteModal.vue";
-import ModalToDo from "../components/todos/ModalToDo.vue";
+import CreateToDoModal from "./todos/CreateToDoModal.vue";
 
 export default {
   name: "ModalOptions",
@@ -35,18 +35,16 @@ export default {
         width: "90%",
         maxWidth: 776,
         height: "80%",
-        styles: "background: inherit;",
 
       });
     },
     openModalToDo() {
       this.$modal.hideAll();
-      this.$modal.show(ModalToDo, null, {
+      this.$modal.show(CreateToDoModal, null, {
         adaptive: true,
         width: "90%",
         maxWidth: 776,
         height: "80%",
-        styles: "background: inherit;",
       });
     },
   },

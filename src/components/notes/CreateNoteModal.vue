@@ -57,7 +57,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-container{
   height: 100%;
   background: linear-gradient(43deg, #4158d0 0%, #c850c0 50%);
