@@ -17,7 +17,7 @@
           placeholder="Buscar nota"
         />
 
-        <button class="btn-grad">
+        <button class="btn-grad" style="cursor: not-allowed !important;">
           <img
             src="../assets/filter.png"
             alt="Boton para filtrar"
@@ -58,7 +58,7 @@
 
 <script>
 import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
-import ModalToDo from "@/components/todos/ModalToDo.vue";
+import CreateToDoModal from "@/components/todos/CreateToDoModal.vue";
 import ModalOptions from "@/components/ModalOptions.vue";
 
 export default {
@@ -100,10 +100,11 @@ export default {
       });
     },
     openModalToDo() {
-      this.$modal.show(ModalToDo, null, {
+      this.$modal.show(CreateToDoModal, null, {
         adaptive: true,
         width: "90%",
-        height: "90%",
+        maxWidth: 776,
+        height: "80%",
       });
     },
     options() {
