@@ -40,6 +40,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
+// calendar
+import VCalendar from 'v-calendar';
+
+// Use v-calendar & v-date-picker components
+Vue.use(VCalendar, {
+  componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
+});
+
 new Vue({
   router,
   store,
