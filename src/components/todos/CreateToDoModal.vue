@@ -32,16 +32,16 @@ export default {
     },
     
     save() {
-      // if (!this.formData.desc || !this.formData.title) {
-      //   alert("Completa todos los campos");
+      if (!this.formData.desc || !this.formData.date) {
+        alert("Completa todos los campos");
 
-      // } else {
-      //   this.$store.dispatch("addNote", {
-      //     desc: this.formData.desc,
-      //     date: this.formData.date,
-      //   });
-      //   this.$modal.hideAll();
-      // }
+      } else {
+        this.$store.dispatch("addToDo", {
+          desc: this.formData.desc,
+          date: this.formData.date,
+        });
+        this.$modal.hideAll();
+      }
     },
 
     setValue(name, value) {
