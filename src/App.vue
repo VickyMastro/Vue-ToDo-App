@@ -1,10 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-    </div>
+    <Header />
     <router-view />
   </div>
 </template>
+
+// header es ahora mi nav en todas las vistas
+<script>
+import Header from './views/Header.vue'
+export default {
+  components: {
+    Header,
+  }
+}
+</script>
 
 <style>
 #app {
