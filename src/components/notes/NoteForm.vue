@@ -1,5 +1,3 @@
-// componente formulario principal
-
 <template>
   <div class="modal-note-container">
     <div class="d-flex justify-content-around">
@@ -47,7 +45,7 @@
 <script>
 
 export default {
-  name: "ModalNote",
+  name: "NoteForm",
   props: ["datos"],
 };
 </script>
