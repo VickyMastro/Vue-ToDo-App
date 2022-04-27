@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import CreateNoteModal from "../components/notes/CreateNoteModal.vue";
+import CreateNoteModal from "./notes/CreateNoteModal.vue";
 import CreateToDoModal from "./todos/CreateToDoModal.vue";
 
 export default {
-  name: "ModalOptions",
+  name: "PhoneModalOptions",
   methods: {
     openModalNota() {
       this.$modal.hideAll();

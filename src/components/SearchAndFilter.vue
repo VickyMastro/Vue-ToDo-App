@@ -59,7 +59,7 @@
 <script>
 import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
 import CreateToDoModal from "@/components/todos/CreateToDoModal.vue";
-import ModalOptions from "@/components/ModalOptions.vue";
+import PhoneModalOptions from "@/components/PhoneModalOptions.vue";
 
 export default {
   name: "SearchAndFilter",
@@ -108,7 +108,7 @@ export default {
       });
     },
     options() {
-      this.$modal.show(ModalOptions, null, {
+      this.$modal.show(PhoneModalOptions, null, {
         adaptive: true,
         width: "250px",
         height: "53px",
