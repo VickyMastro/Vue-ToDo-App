@@ -5,29 +5,58 @@ import Home from '../views/Home.vue'
 import Notes from '../views/Notes.vue'
 import ToDos from '../views/ToDos.vue'
 // userForm se va, voy a usas CreateUser y loginUser
-import UserForm from '../components/user/UserForm.vue'
+import CreateUser from '../components/user/CreateUser.vue'
+import LoginUser from '../components/user/LoginUser.vue'
+import index from '../components/user/index.vue'
+import store from '../store/index'
 
 Vue.use(VueRouter)
+
+const checkUser = (async (to, from, next) => {
+  /* Si requiere auth y no esta logueado */
+  if (await store.dispatch("getCurrentUser")) {
+    next(); 
+  }
+  else {
+    next({name: 'Login'});
+  }
+});
 
 const routes = [
   {
     path: '/',
-    component: Home
+    name: 'Home',
+    component: Home,
+    beforeEnter: checkUser,
   },
   {
     path: '/notes',
     name: 'Notes',
-    component: Notes
+    component: Notes,
+    beforeEnter: checkUser,
   },
   {
     path: '/toDos',
     name: 'ToDos',
-    component: ToDos
+    component: ToDos,
+    beforeEnter: checkUser,
   },
   {
     path: '/user',
-    name: 'User',
-    component: UserForm
+    component: index,
+    redirect: '/user/Login',
+    children:[
+      {
+      path: 'createUser',
+      name: 'User',
+      component: CreateUser
+    },
+    {
+      path: 'Login',
+      name: 'Login',
+      component: LoginUser
+    }
+    ]
   },
   {
     path: '*',
@@ -35,8 +64,11 @@ const routes = [
   },
 ]
 
+const mode= 'history'
+
 const router = new VueRouter({
-  routes
+  routes,
+  mode
 })
 
 export default router
