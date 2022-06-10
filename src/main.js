@@ -6,7 +6,6 @@ import store from './store'
 Vue.config.productionTip = false;
 
 // Autoimportacion de componentes
-
 import {upperFirst, camelCase} from 'lodash';
 
 const requireComponent = require.context(
@@ -33,7 +32,7 @@ requireComponent.keys().forEach(fileName => {
   )
 });
 
-// Bootstrap Vue
+// Bootstrap 
 import 'bootstrap' 
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -47,6 +46,11 @@ import VCalendar from 'v-calendar';
 Vue.use(VCalendar, {
   componentPrefix: 'vc',  // Use <vc-calendar /> instead of <v-calendar />
 });
+
+// notificaciones
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 
 new Vue({
   router,
