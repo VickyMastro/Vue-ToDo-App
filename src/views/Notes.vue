@@ -1,19 +1,32 @@
 <template>
   <div class="container">
     <div class="row ">
-      <CardNote v-for="note in getNotes" :key="note.id" :note="note" />
+      <CardNote v-for="note in notes" :key="note.id" :note="note"/>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import CardNote from "../components/notes/CardNote.vue";
+import NotesRepository from '../repositories/NotesRepository'
+// importar el repositorio entero y ejecutar su metodo
 
 export default {
   name: "Notes",
-  computed: {
-    ...mapGetters(["getNotes"]),
+  async mounted(){
+    try {
+      this.notes = await NotesRepository.getNotes()
+    } catch (error) {
+      this.$toast.error('No se encontraron notas',{
+        position: 'top-right',
+        duration: 3000
+      })
+    }
+  },
+  data(){
+    return {
+      notes: []
+    }
   },
   components: {
     CardNote,
