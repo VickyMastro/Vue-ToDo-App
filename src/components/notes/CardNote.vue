@@ -24,6 +24,7 @@
 
 <script>
 import EditNoteModal from "./EditNoteModal.vue";
+import NotesRepository from '@/repositories/NotesRepository'
 
 export default {
   name: "CardNote",
@@ -43,8 +44,25 @@ export default {
         }
       );
     },
-    deleteNote(){   
-      this.$store.dispatch("deleteNote", this.note.id)
+    async deleteNote(){  
+       try {
+          await NotesRepository.deleteNote(this.note.id);
+
+          this.$toast.success("La nota fue eliminada", {
+          position: "top-right",
+          duration: 3000,
+        });
+        // vuelvo a obtener notas para actualice la/s que queda/n
+          const notesComponent = this.$root.$children[0].$children[1].$refs.noteRef
+          notesComponent.actualizar()
+
+        } catch (error) {
+          this.$toast.error("No se pudo eliminar la nota", {
+            position: "top-right",
+            duration: 3000,
+          });
+        }        
+
     }
   },
   filters:{

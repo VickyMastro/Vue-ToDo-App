@@ -7,7 +7,7 @@ export default {
     getNotes: async () => {
         try {
             const response = await axios.get('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes')
-            console.log(response.data);
+
             return response.data
             
         } catch (error) {
@@ -17,11 +17,20 @@ export default {
     },
     createNote: async (noteData) => {
         try {
-            await axios.post('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes', noteData)
+            await axios.post('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes/', noteData)
             
         } catch (error) {
             console.error(error)
             throw error
         }
     },
+    deleteNote: async (noteId) => {
+        try {
+            await axios.delete(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes/${noteId}`)
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+    },
+    
 }
