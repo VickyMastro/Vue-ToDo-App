@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import notesModule from "./modules/notesModule";
 import toDosModule from "./modules/toDosModule";
 import {auth} from '../firebase';
 import {createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile} from 'firebase/auth';
@@ -74,7 +73,6 @@ const store = new Vuex.Store({
   },
 
   modules: {
-    notesModule,
     toDosModule
   },
 });
@@ -82,5 +80,4 @@ const store = new Vuex.Store({
 export default store;
 store.dispatch("isLogin");
 
-store.dispatch("passNotes");
 store.dispatch("passToDos");
