@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <SearchAndFilter />
-    <Notes />
+    <Notes ref="noteRef"/>
     <ToDos />
   </div>
 </template>

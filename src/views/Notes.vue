@@ -14,14 +14,7 @@ import NotesRepository from '../repositories/NotesRepository'
 export default {
   name: "Notes",
   async mounted(){
-    try {
-      this.notes = await NotesRepository.getNotes()
-    } catch (error) {
-      this.$toast.error('No se encontraron notas',{
-        position: 'top-right',
-        duration: 3000
-      })
-    }
+   await this.actualizar()
   },
   data(){
     return {
@@ -31,5 +24,17 @@ export default {
   components: {
     CardNote,
   },
+  methods: {
+    async actualizar(){
+      try {
+      this.notes = await NotesRepository.getNotes()
+    } catch (error) {
+      this.$toast.error('No se encontraron notas',{
+        position: 'top-right',
+        duration: 3000
+      })
+    }
+    }
+  }
 };
 </script>
