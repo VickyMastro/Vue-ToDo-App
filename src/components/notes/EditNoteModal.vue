@@ -12,15 +12,22 @@
 
 <script>
 import NoteForm from "./NoteForm.vue";
-import moment from "moment";
-
+import NotesRepository from '@/repositories/NotesRepository'
 
 export default {
   name: "EditNoteModal",
   props: ["id"],
-  mounted(){
-      this.formData = this.noteToEdit
-      this.formData.date = moment().format("DD/MM/YYYY");
+  async mounted(){
+    try {
+      this.formData = await NotesRepository.getNote(this.id)
+      
+    } catch (error) {
+      this.$toast.error("No se encontro la nota a editar", {
+            position: "top-right",
+            duration: 3000,
+          });
+      this.$modal.hideAll();
+    }
   },
   data() {
     return {
@@ -37,24 +44,29 @@ export default {
       this.$modal.hideAll();
     },
 
-    save() {
-      this.$store.dispatch("editNote", {
-        title: this.formData.title,
-        desc: this.formData.desc,
-        date: this.formData.date,
-        id: this.id,
-      });
+    async save() {
+      try {
+          await NotesRepository.updateNote(this.id, this.formData);
+
+          this.$toast.success("La nota fue editada con éxito", {
+          position: "top-right",
+          duration: 3000,
+        });
+        // vuelvo a obtener notas para actualice la/s que queda/n
+          const notesComponent = this.$root.$children[0].$children[1].$refs.noteRef
+          notesComponent.actualizar()
+
+        } catch (error) {
+          this.$toast.error("No se pudo editar la nota", {
+            position: "top-right",
+            duration: 3000,
+          });
+        }        
       this.$modal.hideAll();
     },
 
     setValue(name, value) {
       this.formData[name] = value;
-    },
-  },
-
-  computed: {
-    noteToEdit() {
-      return this.$store.getters.getNoteId(this.id);
     },
   },
 
