@@ -13,6 +13,7 @@
 <script>
 import NoteForm from "./NoteForm.vue";
 import moment from "moment";
+import NotesRepository from '@/repositories/NotesRepository'
 
 export default {
   name: "CreateNoteModal",
@@ -32,17 +33,31 @@ export default {
     cancel() {
       this.$modal.hideAll();
     },
-    
-    save() {
-      if (!this.formData.desc || !this.formData.title) {
-        alert("Completa todos los campos");
 
-      } else {
-        this.$store.dispatch("addNote", {
-          title: this.formData.title,
-          desc: this.formData.desc,
-          date: this.formData.date,
+    async save() {
+      if (!this.formData.desc || !this.formData.title) {
+        this.$toast.warning("Completa todos los campos para crear la nota", {
+          position: "top-right",
+          duration: 3000,
         });
+      } else {
+        try {
+          await NotesRepository.createNote(this.formData);
+
+          this.$toast.success("La nota fue creada con éxito", {
+          position: "top-right",
+          duration: 3000,
+        });
+        // vuelvo a obtener notas para que muestre las nuevas
+          const notesComponent = this.$root.$children[0].$children[1].$refs.noteRef
+          notesComponent.actualizar()
+
+        } catch (error) {
+          this.$toast.error("No se pudo crear la nota", {
+            position: "top-right",
+            duration: 3000,
+          });
+        }        
         this.$modal.hideAll();
       }
     },
@@ -58,9 +73,8 @@ export default {
 </script>
 
 <style scoped>
-.modal-container{
+.modal-container {
   height: 100%;
   background: linear-gradient(43deg, #4158d0 0%, #c850c0 50%);
-
 }
 </style>
