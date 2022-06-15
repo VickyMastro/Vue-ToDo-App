@@ -42,7 +42,7 @@ export default {
         });
       } else {
         try {
-          await NotesRepository.createNote(this.formData);
+          await NotesRepository.createNote({...this.formData, date: new Date()});
 
           this.$toast.success("La nota fue creada con éxito", {
           position: "top-right",
