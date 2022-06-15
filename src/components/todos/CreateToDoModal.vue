@@ -12,6 +12,7 @@
 
 <script>
 import ToDoForm from "./ToDoForm.vue";
+import ToDosRepository from "@/repositories/ToDosRepository";
 
 export default {
   name: "CreateToDoModal",
@@ -31,15 +32,33 @@ export default {
       this.$modal.hideAll();
     },
     
-    save() {
+    async save() {
       if (!this.formData.desc || !this.formData.date) {
-        alert("Completa todos los campos");
+        this.$toast.warning('Completa todos los campos para crear el toDo',{
+        position: 'top-right',
+        duration: 3000
+      })
 
       } else {
-        this.$store.dispatch("addToDo", {
-          desc: this.formData.desc,
-          date: this.formData.date,
-        });
+        try {
+          await ToDosRepository.createToDo(this.formData)
+
+          this.$toast.success('El toDo fue creado con éxito',{
+          position: 'top-right',
+          duration: 3000
+          })
+
+          const toDosComponent = this.$root.$children[0].$children[1].$refs.toDoRef
+          toDosComponent.actualizar()
+
+        } catch (error) {
+          console.log(error);
+
+          this.$toast.error('No se puedo crear el toDo',{
+          position: 'top-right',
+          duration: 3000
+          })
+        }
         this.$modal.hideAll();
       }
     },

@@ -12,4 +12,13 @@ export default {
             throw error
         }
     },
+    createToDo: async (toDoData) => {
+        try {
+            await axios.post('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos', toDoData)
+        
+        } catch (error) {
+            console.error('estoy en repository',error)
+            throw error
+        }
+    }
 }
