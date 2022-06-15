@@ -12,12 +12,13 @@
 
 <script>
 import ToDoForm from "./ToDoForm.vue";
+import ToDosRepository from "@/repositories/ToDosRepository";
 
 export default {
   name: "EditToDoModal",
   props: ["id"],
-  mounted(){
-    this.formData = this.toDoToEdit
+  async mounted(){
+    this.formData = await ToDosRepository.getToDo(this.id)
   },
   data() {
     return {
@@ -33,23 +34,29 @@ export default {
       this.$modal.hideAll();
     },
 
-    save() {
-      this.$store.dispatch("editToDo", {
-        desc: this.formData.desc,
-        date: this.formData.date,
-        id: this.id,
-      });
+    async save() {
+      try {
+        await ToDosRepository.updateToDo(this.id, this.formData)
+
+        this.$toast.success("El toDo fue editado con éxito", {
+          position: "top-right",
+          duration: 3000,
+        });
+
+        const toDosComponent = this.$root.$children[0].$children[1].$refs.toDoRef
+        toDosComponent.actualizar()
+
+      } catch (error) {
+        this.$toast.error('No se pudo editar el toDo',{
+          position: 'top-right',
+          duration: 3000
+          })
+      }
       this.$modal.hideAll();
     },
 
     setValue(name, value) {
       this.formData[name] = value;
-    },
-  },
-
-  computed: {
-    toDoToEdit() {
-      return this.$store.getters.getToDoId(this.id);
     },
   },
 
