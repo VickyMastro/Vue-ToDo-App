@@ -2,11 +2,11 @@
   <div class="col-sm-12 my-3">
     <div class="card">
       <div class="card-header">
-        {{ toDo.date | formatDate }}
+        {{ toDo.date }}
         <button class="delete-button" @click="deleteToDo">
           <img
             src="../../assets/delete.png"
-            alt=""
+            alt="cruz para eliminar un toDo"
             width="20px"
             height="20px"
           />
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import EditToDoModal from "./EditToDoModal.vue";
 
 export default {
@@ -76,9 +75,6 @@ export default {
       } else {
         return description;
       }
-    },
-    formatDate(date) {
-      return moment(date).format("DD/MM/YYYY");
     },
   },
 };
