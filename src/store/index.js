@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import toDosModule from "./modules/toDosModule";
 import {auth} from '../firebase';
 import {createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile} from 'firebase/auth';
 
@@ -72,12 +71,7 @@ const store = new Vuex.Store({
     }
   },
 
-  modules: {
-    toDosModule
-  },
 });
 
 export default store;
 store.dispatch("isLogin");
-
-store.dispatch("passToDos");
