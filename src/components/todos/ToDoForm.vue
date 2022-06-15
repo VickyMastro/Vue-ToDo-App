@@ -8,8 +8,7 @@
       <div class="col-sm-12 col-md-12">
         <!-- DESC -->
         <label for="desc" style="margin-bottom: 12px; margin-left: 12px"
-          >Descripcion de Nota</label
-        >
+          >Descripcion del ToDo</label>
 
         <textarea
           class="form-control"
