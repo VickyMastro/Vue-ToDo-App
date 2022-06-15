@@ -40,6 +40,7 @@
 
 <script>
 import EditToDoModal from "./EditToDoModal.vue";
+import ToDosRepository from "@/repositories/ToDosRepository";
 
 export default {
   name: "CardToDo",
@@ -59,8 +60,24 @@ export default {
         }
       );
     },
-    deleteToDo() {
-      this.$store.dispatch("deleteToDo", this.toDo.id);
+    async deleteToDo() {
+      try {
+        await ToDosRepository.deleteToDo(this.toDo.id)
+
+        this.$toast.success('El toDo fue eliminado',{
+            position: 'top-right',
+            duration: 3000
+          })
+
+        const toDosComponent = this.$root.$children[0].$children[1].$refs.toDoRef
+        toDosComponent.actualizar()
+
+      } catch (error) {
+          this.$toast.error('No se pudo eliminar el toDo',{
+            position: 'top-right',
+            duration: 3000
+          })
+      }
     },
   },
   watch: {

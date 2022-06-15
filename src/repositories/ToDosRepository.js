@@ -21,4 +21,14 @@ export default {
             throw error
         }
     }
+    ,
+    deleteToDo: async (toDoId) => {
+        try {
+            await axios.delete(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos/${toDoId}`)
+        
+        } catch (error) {
+            console.error('estoy en repository',error)
+            throw error
+        }
+    }
 }
