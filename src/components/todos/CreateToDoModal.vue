@@ -52,9 +52,7 @@ export default {
           toDosComponent.actualizar()
 
         } catch (error) {
-          console.log(error);
-
-          this.$toast.error('No se puedo crear el toDo',{
+          this.$toast.error('No se pudo crear el toDo',{
           position: 'top-right',
           duration: 3000
           })
