@@ -16,7 +16,7 @@ export default {
     getToDo: async (toDoId) => {
         try {
             const response = await axios.get(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos/${toDoId}`)
-            console.log(response.data);
+
             return response.data
         } catch (error) {
             console.log(error);
