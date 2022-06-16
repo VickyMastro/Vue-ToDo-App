@@ -139,4 +139,8 @@ a {
   background: #c850c0;
   border-color: #c850c0;
 }
+
+a:hover{
+  color: white;
+}
 </style>
