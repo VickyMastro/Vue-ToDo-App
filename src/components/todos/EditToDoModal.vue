@@ -18,7 +18,16 @@ export default {
   name: "EditToDoModal",
   props: ["id"],
   async mounted(){
-    this.formData = await ToDosRepository.getToDo(this.id)
+    try {
+      this.formData = await ToDosRepository.getToDo(this.id)
+      
+    } catch (error) {
+      this.$toast.error("No se encontro el toDo a editar", {
+            position: "top-right",
+            duration: 3000,
+          });
+      this.$modal.hideAll();
+    }
   },
   data() {
     return {
