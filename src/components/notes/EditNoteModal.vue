@@ -46,22 +46,22 @@ export default {
 
     async save() {
       try {
-          await NotesRepository.updateNote(this.id, this.formData);
+        await NotesRepository.updateNote(this.id, {...this.formData, date: new Date()});
 
-          this.$toast.success("La nota fue editada con éxito", {
+        this.$toast.success("La nota fue editada con éxito", {
+        position: "top-right",
+        duration: 3000,
+      });
+        // vuelvo a obtener notas para actualice la/s que queda/n
+        const notesComponent = this.$root.$children[0].$children[1].$refs.noteRef
+        notesComponent.actualizar()
+
+      } catch (error) {
+        this.$toast.error("No se pudo editar la nota", {
           position: "top-right",
           duration: 3000,
         });
-        // vuelvo a obtener notas para actualice la/s que queda/n
-          const notesComponent = this.$root.$children[0].$children[1].$refs.noteRef
-          notesComponent.actualizar()
-
-        } catch (error) {
-          this.$toast.error("No se pudo editar la nota", {
-            position: "top-right",
-            duration: 3000,
-          });
-        }        
+      }        
       this.$modal.hideAll();
     },
 
