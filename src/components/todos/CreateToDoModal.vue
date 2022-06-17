@@ -24,6 +24,7 @@ export default {
       formData: {
         desc: "",
         date: "",
+        isDone: false,
       },
     };
   },
