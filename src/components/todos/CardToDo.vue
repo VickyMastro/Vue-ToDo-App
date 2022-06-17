@@ -17,7 +17,6 @@
           <input
             class="form-check-input input-checkbox"
             type="checkbox"
-            value=""
             id="flexCheckDefault"
             v-model="toDo.isDone"
           />
@@ -60,6 +59,21 @@ export default {
         }
       );
     },
+    async isDoneChange(value){
+      try{
+        await ToDosRepository.updateToDo(this.toDo.id, {...this.toDo, date: new Date(),isDone : value})
+
+        this.$toast.success('El toDo fue completado',{
+          position: 'top-right',
+          duration: 3000
+        })
+      } catch (error) {
+        this.$toast.error('No se pudo editar el estado del toDo',{
+          position: 'top-right',
+          duration: 3000
+        })
+      } 
+    },
     async deleteToDo() {
       try {
         await ToDosRepository.deleteToDo(this.toDo.id)
@@ -81,8 +95,8 @@ export default {
     },
   },
   watch: {
-    "toDo.isDone"() {
-      this.$store.dispatch("editToDo", this.toDo);
+    "toDo.isDone"(newValue) {
+        this.isDoneChange(newValue);    
     },
   },
   filters: {
