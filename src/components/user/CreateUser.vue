@@ -36,6 +36,7 @@ export default {
           email: this.userData.email,
           password: this.userData.password,
         });
+      this.$router.push({name: 'Home'})
     }
   },
   components: {
