@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12 my-3">
+  <div class="col-sm-12 col-md-6 my-3">
     <div class="card">
       <div class="card-header">
         {{ toDo.date }}
