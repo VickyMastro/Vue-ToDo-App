@@ -2,7 +2,13 @@
   <div>
     <nav class="container-nav navbar navbar-light">
       <div class="container-fluid justify-content-between">
-        <router-link class="navbar-brand link-router" :to="{ name: 'Home' }">
+        <router-link
+          class="navbar-brand link-router"
+          :to="{ name: 'Home' }"
+          data-bs-toggle="tooltip"
+          data-bs-placement="bottom"
+          title="Ir al inicio"
+        >
           Home
           <img
             src="@/assets/home.png"
@@ -12,7 +18,13 @@
             class="d-inline-block align-text-top"
           />
         </router-link>
-        <router-link class="navbar-brand link-router" :to="{ name: 'EditUser' }">
+        <router-link
+          class="navbar-brand link-router"
+          :to="{ name: 'EditUser' }"
+          data-bs-toggle="tooltip"
+          data-bs-placement="bottom"
+          title="Editar datos del usuario"
+        >
           User
           <img
             src="@/assets/user.png"
