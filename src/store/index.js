@@ -14,7 +14,9 @@ const store = new Vuex.Store({
 
   getters: {
     // funciones que devuelven valor/es del estado
-    
+    getUser(state){
+      return state.user
+    },
   },
 
   mutations: {
@@ -56,7 +58,7 @@ const store = new Vuex.Store({
 
     async doRegister(context, {name, email, password}) {
       await createUserWithEmailAndPassword(auth, email, password)
-      await updateProfile(auth.currentUser, {displayName: name})
+      await updateProfile(auth.currentUser, {displayName: name, photoURL: '2.svg'})
       context.commit('setUser', auth.currentUser)
     },
 

@@ -7,6 +7,7 @@ import ToDos from '../views/ToDos.vue'
 // userForm se va, voy a usas CreateUser y loginUser
 import CreateUser from '../components/user/CreateUser.vue'
 import LoginUser from '../components/user/LoginUser.vue'
+import EditUser from '../components/user/EditUser.vue'
 import index from '../components/user/index.vue'
 import store from '../store/index'
 
@@ -55,7 +56,13 @@ const routes = [
       path: 'Login',
       name: 'Login',
       component: LoginUser
-    }
+    },
+    {
+      path: 'editUser',
+      name: 'EditUser',
+      component: EditUser,
+      beforeEnter: checkUser,
+    },
     ]
   },
   {
