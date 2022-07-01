@@ -4,9 +4,10 @@ import axios from "axios";
 // cada funcion representa un llamado a la api (endpoint)
 // try catch 
 export default {
-    getNotes: async () => {
+    getNotes: async (user) => {
         try {
-            const response = await axios.get('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes')
+            const filters = {userUID: user.uid}
+            const response = await axios.get(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes?filters=${JSON.stringify(filters)}`)
 
             return response.data
             
