@@ -1,13 +1,12 @@
 import axios from "axios";
 
-// exportar por default un objeto donde cada propiedad sea una funcion 
-// cada funcion representa un llamado a la api (endpoint)
-// try catch 
+const BASEURL = process.env.VUE_APP_BASEURL;
+
 export default {
     getNotes: async (user) => {
         try {
             const filters = {userUID: user.uid}
-            const response = await axios.get(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes?filters=${JSON.stringify(filters)}`)
+            const response = await axios.get(`${BASEURL}/notes?filters=${JSON.stringify(filters)}`)
 
             return response.data
             
@@ -19,7 +18,7 @@ export default {
 
     getNote: async (noteId) => {
         try {
-            const response = await axios.get(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes/${noteId}`)
+            const response = await axios.get(`${BASEURL}/notes/${noteId}`)
      
             return response.data
             
@@ -31,7 +30,7 @@ export default {
 
     createNote: async (noteData) => {
         try {
-            await axios.post('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes/', noteData)
+            await axios.post(`${BASEURL}/notes/`, noteData)
             
         } catch (error) {
             console.error(error)
@@ -41,7 +40,7 @@ export default {
 
     updateNote: async (noteId , noteData) => {
         try {
-            await axios.put(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes/${noteId}`, noteData)
+            await axios.put(`${BASEURL}/notes/${noteId}`, noteData)
         
         } catch (error) {
             console.error(error)
@@ -51,7 +50,7 @@ export default {
 
     deleteNote: async (noteId) => {
         try {
-            await axios.delete(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/notes/${noteId}`)
+            await axios.delete(`${BASEURL}/notes/${noteId}`)
         
         } catch (error) {
             console.error(error)
