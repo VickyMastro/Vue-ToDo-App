@@ -14,6 +14,7 @@
 import NoteForm from "./NoteForm.vue";
 import moment from "moment";
 import NotesRepository from '@/repositories/NotesRepository'
+import { mapGetters } from "vuex";
 
 export default {
   name: "CreateNoteModal",
@@ -29,6 +30,9 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
   methods: {
     cancel() {
       this.$modal.hideAll();
@@ -42,7 +46,7 @@ export default {
         });
       } else {
         try {
-          await NotesRepository.createNote({...this.formData, date: new Date()});
+          await NotesRepository.createNote({...this.formData, date: new Date(), userUID: this.getUser.uid});
 
           this.$toast.success("La nota fue creada con éxito", {
           position: "top-right",
