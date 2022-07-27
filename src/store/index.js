@@ -1,7 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {auth} from '../firebase';
-import {createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import { auth } from "../firebase";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut,
+} from "firebase/auth";
 
 Vue.use(Vuex);
 
@@ -14,8 +20,8 @@ const store = new Vuex.Store({
 
   getters: {
     // funciones que devuelven valor/es del estado
-    getUser(state){
-      return state.user
+    getUser(state) {
+      return state.user;
     },
   },
 
@@ -25,10 +31,9 @@ const store = new Vuex.Store({
       state.searchFilter = text;
     },
 
-    setUser(state, user){
-      state.user = user
-    }
-
+    setUser(state, user) {
+      state.user = user;
+    },
   },
 
   actions: {
@@ -37,42 +42,49 @@ const store = new Vuex.Store({
       context.commit("setText", text);
     },
 
-    getCurrentUser(){
-      return new Promise((resolve, reject)=>{
+    getCurrentUser() {
+      return new Promise((resolve, reject) => {
         const unsuscribe = auth.onAuthStateChanged(
-          user=> {
+          (user) => {
             unsuscribe();
             resolve(user);
           },
           () => {
             reject();
           }
-        )
-      })
+        );
+      });
     },
 
-    async doLogin(context, {email, password}){
-      await signInWithEmailAndPassword(auth, email, password)
-      context.commit('setUser', auth.currentUser)
+    async doLogin(context, { email, password }) {
+      await signInWithEmailAndPassword(auth, email, password);
+      context.commit("setUser", auth.currentUser);
     },
 
-    async doRegister(context, {name, email, password}) {
-      await createUserWithEmailAndPassword(auth, email, password)
-      await updateProfile(auth.currentUser, {displayName: name, photoURL: '2.svg'})
-      context.commit('setUser', auth.currentUser)
+    async doSignOut(context){
+      await signOut(auth)
+      context.commit("setUser", null)
     },
 
-    isLogin(context){
-      onAuthStateChanged(auth, user=> {
-        if(user){
-          context.commit('setUser', user)
-        } else{
-          context.commit('setUser', null)
+    async doRegister(context, { name, email, password }) {
+      await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: "2.svg",
+      });
+      context.commit("setUser", auth.currentUser);
+    },
+
+    isLogin(context) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          context.commit("setUser", user);
+        } else {
+          context.commit("setUser", null);
         }
-      })
-    }
+      });
+    },
   },
-
 });
 
 export default store;

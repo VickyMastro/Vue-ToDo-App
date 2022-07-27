@@ -136,8 +136,9 @@ export default {
     };
   },
   methods: {
-    signOff() {
-      console.log("cerre sesion de mentirita jeje");
+    async signOff() {
+      await this.$store.dispatch("doSignOut");
+      this.$router.push('Login') 
     },
 
     editInfo(e) {
