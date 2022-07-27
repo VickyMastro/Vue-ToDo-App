@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-around pt-4">
-      <UserForm :userData="userData" @setValue="setValue">
+      <UserForm :userData="userData" :isCreateUser='false' @setValue="setValue">
         <div class="d-flex justify-content-end">
           <button class="btn-grad" type="button" @click="loginUser">
             Ingresar

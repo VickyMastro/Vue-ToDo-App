@@ -32,7 +32,7 @@
         @input="$emit('setValue', 'password', $event.target.value)"
       />
       <label for="floatingPassword">Contraseña</label>
-      <a :href="url">{{userData.msj}}</a>
+      <router-link :to="{ name : url}">{{userData.msj}}</router-link>
     </div>
     <slot></slot>
   </div>
@@ -44,7 +44,7 @@ export default {
   props: ['userData', 'isCreateUser'],
   computed:{
     url(){
-      return this.isCreateUser ? './LoginUser': './CreateUser'
+      return this.isCreateUser ? 'Login': 'User'
     },
   }
 };
