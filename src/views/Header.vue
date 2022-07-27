@@ -12,7 +12,7 @@
           Home
           <img
             src="@/assets/home.png"
-            alt="Icono de usuario"
+            alt="Icono de home"
             width="25"
             height="25"
             class="d-inline-block align-text-top"
@@ -25,7 +25,7 @@
           data-bs-placement="bottom"
           title="Editar datos del usuario"
         >
-          User
+          {{userName}}
           <img
             src="@/assets/user.png"
             alt="Icono de usuario"
@@ -40,8 +40,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Header",
+  computed: {
+    ...mapGetters(["getUser"]),
+    
+    userName(){
+      return !this.getUser ? '' : this.getUser.displayName
+    },
+  },
 };
 </script>
 

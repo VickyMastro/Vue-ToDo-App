@@ -30,8 +30,8 @@ export default {
       this.userData[name] = value;
     },
 
-    createUser(){
-      this.$store.dispatch("doRegister", {
+    async createUser(){
+      await this.$store.dispatch("doRegister", {
           name: this.userData.name,
           email: this.userData.email,
           password: this.userData.password,
