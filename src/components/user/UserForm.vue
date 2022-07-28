@@ -32,8 +32,8 @@
         @input="$emit('setValue', 'password', $event.target.value)"
       />
       <label for="floatingPassword">Contraseña</label>
-      <router-link :to="{ name : url}">{{userData.msj}}</router-link>
     </div>
+      <router-link class="link-user" :to="{ name : url}">{{userData.msj}}</router-link>
     <slot></slot>
   </div>
 </template>
@@ -57,6 +57,11 @@ export default {
 }
 
 .inputs-container{
-  width: 400px;
+  width: 350px;
+}
+
+.link-user{
+  padding-top: 15px;
+  color: #603845;
 }
 </style>
