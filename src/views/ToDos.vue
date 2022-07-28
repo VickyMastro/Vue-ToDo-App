@@ -9,6 +9,7 @@
 <script>
 import CardToDo from "../components/todos/CardToDo.vue";
 import ToDosRepository from "../repositories/ToDosRepository"
+import { mapGetters } from "vuex";
 
 export default {
   name: "ToDos",
@@ -20,10 +21,13 @@ export default {
       toDos: []
     }
   },
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
   methods: {
     async actualizar(){
       try {
-      this.toDos = await ToDosRepository.getToDos()
+      this.toDos = await ToDosRepository.getToDos(this.getUser)
     } catch (error) {
       this.$toast.error('No se encontraron toDos',{
         position: 'top-right',

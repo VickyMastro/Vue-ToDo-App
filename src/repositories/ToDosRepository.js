@@ -1,9 +1,12 @@
 import axios from "axios";
  
+const BASEURL = process.env.VUE_APP_BASEURL;
+
 export default {
-    getToDos: async () => {
+    getToDos: async (user) => {
         try {
-            const response = await axios.get('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos')
+            const filters = {userUID: user.uid}
+            const response = await axios.get(`${BASEURL}/todos?filters=${JSON.stringify(filters)}`)
 
             return response.data
             
@@ -15,7 +18,7 @@ export default {
 
     getToDo: async (toDoId) => {
         try {
-            const response = await axios.get(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos/${toDoId}`)
+            const response = await axios.get(`${BASEURL}/todos/${toDoId}`)
 
             return response.data
         } catch (error) {
@@ -26,7 +29,7 @@ export default {
 
     createToDo: async (toDoData) => {
         try {
-            await axios.post('https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos', toDoData)
+            await axios.post(`${BASEURL}/todos/`, toDoData)
         
         } catch (error) {
             console.error(error)
@@ -36,7 +39,7 @@ export default {
 
     updateToDo: async (toDoId, toDoData) => {
         try {
-            await axios.put(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos/${toDoId}`, toDoData)
+            await axios.put(`${BASEURL}/todos/${toDoId}`, toDoData)
             
         } catch (error) {
             console.log(error);
@@ -46,7 +49,7 @@ export default {
 
     deleteToDo: async (toDoId) => {
         try {
-            await axios.delete(`https://us-central1-todoapp-8c3f3.cloudfunctions.net/app/todos/${toDoId}`)
+            await axios.delete(`${BASEURL}/todos/${toDoId}`)
         
         } catch (error) {
             console.error(error)
