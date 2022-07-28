@@ -33,11 +33,37 @@ export default {
     },
 
     async loginUser(){
-     await this.$store.dispatch("doLogin", {
+      try {
+        await this.$store.dispatch("doLogin", {
           email: this.userData.email,
           password: this.userData.password,
         });
-      this.$router.push({name: 'Home'})
+
+        this.$router.push({name: 'Home'})
+      } catch (error) {
+        switch (error.code) {
+          case 'auth/user-not-found':
+            this.$toast.error("No se encontro un usuario registrado con ese mail", {
+            position: "top-right",
+            duration: 5000,
+          });
+            break;
+
+          case 'auth/wrong-password':
+            this.$toast.error("La contraseña es incorrecta", {
+            position: "top-right",
+            duration: 3000,
+          });
+            break;
+        
+          default:
+            this.$toast.error("Algo salio mal", {
+            position: "top-right",
+            duration: 3000,
+          });
+            break;
+        }
+      }
     }
   },
   components: {
