@@ -1,27 +1,25 @@
 <template>
   <div class="user-form-container fs-4">
-    <div class="text-center fs-1 mt-5 text-decoration-underline">
+    <div class="text-center fs-1 mt-5">
       <p>Editar usuario</p>
+      <hr class="hr" />
     </div>
 
     <div class="inputs-container">
       <div class="input-container row">
-        <label for="userAvatar" class="col-sm-2 col-form-label">Avatar:</label>
-        <div class="col-sm-6">
-          <input
-            type="text"
-            readonly
-            class="form-control-plaintext"
-            id="userAvatar"
-            v-model="userData.avatar"
-          />
+        <div class="col">
+          <label for="userAvatar" class="col-sm-2 col-form-label"
+            >Avatar:</label
+          >
         </div>
-        <EditUserButton />
       </div>
-
+      <!-- -------------------------------Name----------------------------------- -->
       <div class="input-container row">
         <label for="inputName" class="col-sm-2 col-form-label">Name:</label>
-        <div class="col-sm-10 d-flex" v-if="!disabled.name">
+        <div
+          class="col-sm-8 d-flex justify-content-between"
+          v-if="!disabled.name"
+        >
           <input
             type="text"
             class="form-control-plaintext"
@@ -29,11 +27,10 @@
             id="inputName"
             v-model="userData.name"
           />
-
           <EditUserButton identifier="name" @editInfo="editInfo" />
         </div>
 
-        <div class="input-group" style="width: 300px" v-else>
+        <div class="col-sm-10 d-flex" v-else>
           <input
             type="text"
             class="form-control"
@@ -59,42 +56,90 @@
           </button>
         </div>
       </div>
-
+      <!-- -----------------------------------Email-------------------------------- -->
       <div class="input-container row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Email:</label>
-        <div class="col-sm-6">
+        <label for="inputEmail" class="col-sm-2 col-form-label">Email:</label>
+        <div
+          class="col-sm-8 d-flex justify-content-between"
+          v-if="!disabled.email"
+        >
           <input
             type="text"
             readonly
             disabled
             class="form-control-plaintext probando"
-            id="staticEmail"
+            id="inputEmail"
             v-model="userData.email"
           />
+          <EditUserButton identifier="email" @editInfo="editInfo" />
+        </div>
+
+        <div class="col-sm-10 d-flex" v-else>
+          <input
+            type="text"
+            class="form-control"
+            id="inputEmail"
+            v-model="userData.email"
+          />
+          <button
+            class="btn btn-outline-secondary"
+            style="border: none; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
+            type="button"
+            id="button-addon2"
+            identifier="email"
+            @click="saveEditInfo('email')"
+          >
+            <img
+              src="../../assets/checkbox.png"
+              alt="boton de editar información del usuario"
+              width="30px"
+              height="30px"
+            />
+          </button>
         </div>
       </div>
-
+      <!-- --------------------------------Password--------------------------------- -->
       <div class="input-container row">
-        <label for="inputPassword" class="col-sm-2 col-form-label"
+        <label for="inputPassword" class="col-sm-3 col-form-label"
           >Password:</label
         >
-        <div class="col-sm-6" v-if="!disabled.password">
+        <div
+          class="col-sm-7 d-flex justify-content-between"
+          v-if="!disabled.password"
+        >
           <input
             type="password"
             class="form-control-plaintext"
             id="inputPassword"
             v-model="userData.password"
           />
+          <EditUserButton identifier="password" @editInfo="editInfo" />
         </div>
-        <div class="col-sm-6" v-else>
+
+        <div class="col-sm-7 d-flex" v-else>
           <input
             type="password"
             class="form-control"
             id="inputPassword"
             v-model="userData.password"
+            placeholder="Ingrese contraseña nueva"
           />
+          <button
+            class="btn btn-outline-secondary"
+            style="border: none; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
+            type="button"
+            id="button-addon2"
+            identifier="password"
+            @click="saveEditInfo('password')"
+          >
+            <img
+              src="../../assets/checkbox.png"
+              alt="boton de editar información del usuario"
+              width="30px"
+              height="30px"
+            />
+          </button>
         </div>
-        <EditUserButton identifier="password" @editInfo="editInfo" />
       </div>
     </div>
 
@@ -109,6 +154,7 @@
 <script>
 import { mapGetters } from "vuex";
 import EditUserButton from "../buttons/EditUserButton.vue";
+import LoginModal from "./LoginModal.vue";
 
 export default {
   name: "EditUser",
@@ -125,6 +171,7 @@ export default {
       disabled: {
         avatar: false,
         name: false,
+        email: false,
         password: false,
       },
       userData: {
@@ -138,17 +185,45 @@ export default {
   methods: {
     async signOff() {
       await this.$store.dispatch("doSignOut");
-      this.$router.push('Login') 
+      this.$router.push("Login");
     },
 
     editInfo(e) {
+      if (e === "password") {
+        this.userData.password = "";
+      }
       this.disabled[e] = true;
-      console.log("edite de mentirita", e);
     },
 
-    saveEditInfo(algo) {
-      this.disabled[algo] = false;
-      console.log("probando save", algo);
+    openChangePasswordAndMailModal() {
+      this.$modal.show(
+        LoginModal,
+        {
+          newEmail: this.userData.email,
+          newPassword: this.userData.password,
+        },
+        {
+          adaptive: true,
+          width: "90%",
+          maxWidth: 776,
+          height: "70%",
+        }
+      );
+    },
+
+    async saveEditInfo(identifier) {
+      if (identifier === "avatar" || identifier === "name") {
+        await this.$store.dispatch("doUpdateProfile", this.userData);
+      } else if (identifier === "email") {
+        await this.openChangePasswordAndMailModal();
+      } else if (identifier === "password") {
+        if (!this.userData.password) {
+          this.userData.password = "********";
+        } else {
+          await this.openChangePasswordAndMailModal();
+        }
+      }
+      this.disabled[identifier] = false;
     },
   },
   computed: {
@@ -161,6 +236,12 @@ export default {
 </script>
 
 <style scoped>
+.hr {
+  width: 80%;
+  height: 2px;
+  color: #472355;
+  margin-left: 10%;
+}
 .user-form-container {
   margin: auto;
   max-width: 500px;
@@ -182,7 +263,7 @@ label {
 
 input {
   width: 190px;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 
 .btn-grad {
