@@ -6,6 +6,10 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   updateProfile,
+  updateEmail,
+  updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   signOut,
 } from "firebase/auth";
 
@@ -61,9 +65,38 @@ const store = new Vuex.Store({
       context.commit("setUser", auth.currentUser);
     },
 
-    async doSignOut(context){
-      await signOut(auth)
-      context.commit("setUser", null)
+    async doSignOut(context) {
+      await signOut(auth);
+      context.commit("setUser", null);
+    },
+
+    async doUpdateProfile(context, { name, photoURL }) {
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photoURL,
+      });
+      context.commit("setUser", auth.currentUser);
+    },
+
+    async doUpdateEmail(context, email) {
+      await updateEmail(auth.currentUser, email);
+      context.commit("setUser", auth.currentUser);
+    },
+    
+    async doUpdatePassword(context, newPassword){
+      await updatePassword(auth.currentUser, newPassword);
+      context.commit("setUser", auth.currentUser);
+    },
+
+    async reauthenticate(context, {email, password, newEmail, newPassword}){
+      const credential = EmailAuthProvider.credential(email, password);
+      await reauthenticateWithCredential(auth.currentUser, credential);
+
+      if (newEmail) {
+        context.dispatch('doUpdateEmail', newEmail)
+      } if (newPassword && newPassword!=='********') {
+        context.dispatch('doUpdatePassword', newPassword)
+      }
     },
 
     async doRegister(context, { name, email, password }) {
