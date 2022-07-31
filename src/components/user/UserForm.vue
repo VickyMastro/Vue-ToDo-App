@@ -1,5 +1,5 @@
 <template>
-  <div class="user-form-container d-flex flex-column">
+  <div :class="styleModal" class="user-form-container d-flex flex-column">
     <div class="text-center fs-1">
       <p>{{userData.titleForm}}</p>
     </div>
@@ -41,7 +41,11 @@
 <script>
 export default {
   name: "UserForm",
-  props: ['userData', 'isCreateUser'],
+  props: {
+    userData: {type: Object},
+    isCreateUser: {type: Boolean},
+    styleModal: {type: String, default:""}
+    },
   computed:{
     url(){
       return this.isCreateUser ? 'Login': 'User'
@@ -54,6 +58,9 @@ export default {
 .user-form-container{
   max-width: 500px;
   height: 300px;
+}
+.container-inputs-modal{
+  align-items: center;
 }
 
 .inputs-container{
