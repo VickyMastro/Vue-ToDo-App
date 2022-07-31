@@ -13,6 +13,7 @@
 <script>
 import ToDoForm from "./ToDoForm.vue";
 import ToDosRepository from "@/repositories/ToDosRepository";
+import { mapGetters } from "vuex";
 
 export default {
   name: "CreateToDoModal",
@@ -28,6 +29,9 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters(["getUser"]),
+  },
   methods: {
     cancel() {
       this.$modal.hideAll();
@@ -42,7 +46,7 @@ export default {
 
       } else {
         try {
-          await ToDosRepository.createToDo(this.formData)
+          await ToDosRepository.createToDo({...this.formData, userUID: this.getUser.uid})
 
           this.$toast.success('El toDo fue creado con éxito',{
           position: 'top-right',
