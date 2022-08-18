@@ -40,28 +40,29 @@ export default {
     
     async save() {
       if (!this.formData.desc || !this.formData.date) {
-        this.$toast.warning('Completa todos los campos para crear el toDo',{
-        position: 'top-right',
-        duration: 3000
-      })
-
+        this.$toast.warning("Completa todos los campos para crear el toDo", {
+          position: "top-right",
+          duration: 3000,
+        });
       } else {
         try {
-          await ToDosRepository.createToDo({...this.formData, userUID: this.getUser.uid})
+          await ToDosRepository.createToDo({
+            ...this.formData,
+            userUID: this.getUser.uid,
+          });
 
-          this.$toast.success('El toDo fue creado con éxito',{
-          position: 'top-right',
-          duration: 3000
-          })
+          this.$toast.success("El toDo fue creado con éxito", {
+            position: "top-right",
+            duration: 3000,
+          });
 
-          const toDosComponent = this.$root.$children[0].$children[1].$refs.toDoRef
-          toDosComponent.actualizar()
-
+          const toDosComponent = this.$root.$children[0].$children[1].$refs.toDoRef;
+          toDosComponent.actualizar();
         } catch (error) {
-          this.$toast.error('No se pudo crear el toDo',{
-          position: 'top-right',
-          duration: 3000
-          })
+          this.$toast.error("No se pudo crear el toDo", {
+            position: "top-right",
+            duration: 3000,
+          });
         }
         this.$modal.hideAll();
       }
@@ -70,7 +71,7 @@ export default {
     setValue(name, value) {
       this.formData[name] = value;
     },
- },
+  },
   components: {
     ToDoForm,
   },
@@ -78,9 +79,8 @@ export default {
 </script>
 
 <style scoped>
-.modal-container{
+.modal-container {
   height: 100%;
   background: linear-gradient(43deg, #c850c0 20%, #ffcc70 80%);
-
 }
 </style>
