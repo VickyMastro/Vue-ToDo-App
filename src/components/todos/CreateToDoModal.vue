@@ -18,10 +18,11 @@ import { mapGetters } from "vuex";
 export default {
   name: "CreateToDoModal",
   mounted() {
-    this.formData.date = new Date();
+    this.minDate = this.formData.date = new Date();
   },
   data() {
     return {
+      minDate: "",
       formData: {
         desc: "",
         date: "",

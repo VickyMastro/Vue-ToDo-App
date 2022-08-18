@@ -1,7 +1,7 @@
 <template>
   <vc-date-picker
     v-model="date"
-    :min-date="new Date()"
+    :min-date="minDate"
     color="purple"
   >
     <template v-slot="{ inputValue, togglePopover }">
@@ -34,7 +34,7 @@
 <script>
 export default {
   name: "Calendar",
-  props: ["initialDate"],
+  props: ["initialDate", "minDate"],
   data(){
     return{
       date: ''
