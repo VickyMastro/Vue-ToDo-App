@@ -31,10 +31,6 @@ const store = new Vuex.Store({
 
   mutations: {
     // func que modifican el estado
-    setText(state, text) {
-      state.searchFilter = text;
-    },
-
     setUser(state, user) {
       state.user = user;
     },
@@ -42,10 +38,6 @@ const store = new Vuex.Store({
 
   actions: {
     // funcion que hace algo antes de hacer una mutación
-    addSearchFilter(context, text) {
-      context.commit("setText", text);
-    },
-
     getCurrentUser() {
       return new Promise((resolve, reject) => {
         const unsuscribe = auth.onAuthStateChanged(
