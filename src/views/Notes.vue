@@ -17,6 +17,7 @@ export default {
   async mounted() {
     await this.actualizar();
   },
+  props: ['filters'],
   data() {
     return {
       notes: [],
@@ -28,7 +29,7 @@ export default {
   methods: {
     async actualizar() {
       try {
-        this.notes = await NotesRepository.getNotes(this.getUser);
+        this.notes = await NotesRepository.getNotes(this.getUser, this.filters);
       } catch (error) {
         this.$toast.error("No se encontraron notas", {
           position: "top-right",
@@ -36,6 +37,11 @@ export default {
         });
       }
     },
+  },
+  watch: {
+    async filters(){
+      await this.actualizar()
+    }
   },
   components: {
     CardNote,

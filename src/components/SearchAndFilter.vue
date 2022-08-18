@@ -1,56 +1,92 @@
 // filtros: prioridad, fecha, completo o incompleto
 <template>
-  <div>
-    <div class="row mt-3">
-      <div
-        class="
-          col-sm-12 col-md-6
-          d-flex
-          align-items-center
-          justify-content-center
-        "
+  <div class="row mt-3">
+    <div
+      class="col-sm-12 col-md-6 d-flex align-items-center justify-content-center"
+    >
+      <!-- ---------------------- input buscador ----------------------->
+      <input
+        type="text"
+        class="search-input mx-4"
+        @change="applyFilters"
+        v-model="search"
+        placeholder="Buscar nota"
+      />
+      <!-- ---------------------- boton filtros ----------------------->
+      <button
+        class="btn-grad"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample"
+        aria-expanded="false"
+        aria-controls="collapseExample"
       >
-        <input
-          type="text"
-          class="search-input mx-4"
-          v-model="text"
-          placeholder="Buscar nota"
+        <img
+          src="../assets/filter.png"
+          alt="Boton para filtrar"
+          width="20px"
+          height="20px"
         />
-
-        <button class="btn-grad" style="cursor: not-allowed !important;">
-          <img
-            src="../assets/filter.png"
-            alt="Boton para filtrar"
-            width="20px"
-            height="20px"
-          />
-        </button>
-      </div>
-
-      <div
-        class="col-sm-12 col-md-4 d-flex justify-content-center"
-        v-if="!isMobile"
+      </button>
+    </div>
+    <!-- ---------------------- boton nueva nota/todo ----------------------->
+    <div
+      class="col-sm-12 col-md-4 d-flex justify-content-center"
+      v-if="!isMobile"
+    >
+      <select
+        class="form-select d-flex btn-grad"
+        v-model="optionSelect"
+        aria-label="Default select example"
       >
-        <select
-          class="form-select d-flex btn-grad"
-          v-model="optionSelect"
-          aria-label="Default select example"
-        >
-          <option hidden value="">Nueva/o</option>
-          <option value="nota">Nota</option>
-          <option value="toDo">ToDo</option>
-        </select>
-      </div>
+        <option hidden value="">Nueva/o</option>
+        <option value="nota">Nota</option>
+        <option value="toDo">ToDo</option>
+      </select>
+    </div>
 
-      <div v-else>
-        <button class="btn-phone" @click="options">
-          <img
-            src="../assets/mas.png"
-            alt="Boton para agregar una nota"
-            width="20px"
-            height="20px"
-          />
-        </button>
+    <div v-else>
+      <button class="btn-phone" @click="options">
+        <img
+          src="../assets/mas.png"
+          alt="Boton para agregar una nota"
+          width="20px"
+          height="20px"
+        />
+      </button>
+    </div>
+    <!-- ---------------------- desplegable con botones ----------------------->
+    <div class="collapse col-md-12" id="collapseExample">
+      <div class="row d-flex justify-content-around">
+        <div class="col-md-4">
+          <select
+            class="form-select filter-input"
+            @change="applyFilters"
+            v-model="listOption"
+            aria-label="Default select example"
+          >
+            <option hidden value="">Filtro por nota o toDo</option>
+            <option value="nota">Nota</option>
+            <option value="toDo">ToDo</option>
+          </select>
+        </div>
+        <!-- --------------------------------------------->
+        <div class="col-md-4">
+          <Calendar :initialDate="date" @setDate="setDate" />
+        </div>
+        <!-- --------------------------------------------->
+        <div class="col-md-4">
+          <select
+            class="form-select filter-input"
+            @change="applyFilters"
+            v-model="isComplete"
+            aria-label="Default select example"
+          >
+            <option hidden value="">ToDo completo o incompleto</option>
+            <option value="completo">Completos</option>
+            <option value="incompleto">Incompletos</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +96,7 @@
 import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
 import CreateToDoModal from "@/components/todos/CreateToDoModal.vue";
 import PhoneModalOptions from "@/components/PhoneModalOptions.vue";
+import Calendar from "../components/Calendar.vue";
 
 export default {
   name: "SearchAndFilter",
@@ -70,9 +107,13 @@ export default {
   },
   data() {
     return {
-      text: "",
       isMobile: false,
       optionSelect: "",
+
+      listOption: "",
+      date: "",
+      isComplete: false,
+      search: "",
     };
   },
   watch: {
@@ -85,12 +126,20 @@ export default {
       }
       this.optionSelect = "";
     },
-
-    text(newValue){
-      this.$store.dispatch("addSearchFilter", newValue);
-    },
   },
   methods: {
+    setDate(date) {
+      this.date = date;
+    },
+
+    applyFilters() {
+      this.$emit("filters", {
+        search: this.search,
+        listOption: this.listOption,
+        date: this.date,
+        isComplete: this.isComplete,
+      });
+    },
     openModalNota() {
       this.$modal.show(CreateNoteModal, null, {
         adaptive: true,
@@ -116,10 +165,18 @@ export default {
       });
     },
   },
+  components: {
+    Calendar,
+  },
 };
 </script>
 
 <style scoped>
+.filter-input {
+  background-color: inherit;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 .search-input {
   width: 200px;
   padding: 12px 30px;
