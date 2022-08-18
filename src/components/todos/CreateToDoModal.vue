@@ -1,6 +1,6 @@
 <template>
   <div class="modal-container">
-    <ToDoForm :formData="formData" @setValue="setValue">
+    <ToDoForm :formData="formData" :minDate="minDate" @setValue="setValue">
       <div class="d-flex justify-content-around">
         <button class="btn-grad" type="button" @click="cancel">Cancelar</button>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="edit-container">
-    <ToDoForm :formData="formData" @setValue="setValue">
+    <ToDoForm :formData="formData" :minDate="minDate" @setValue="setValue">
       <div class="d-flex justify-content-around">
         <button class="btn-grad" type="button" @click="cancel">Cancelar</button>
 
@@ -20,6 +20,7 @@ export default {
   async mounted(){
     try {
       this.formData = await ToDosRepository.getToDo(this.id)
+      this.minDate = this.formData.date
       
     } catch (error) {
       this.$toast.error("No se encontro el toDo a editar", {
@@ -31,6 +32,7 @@ export default {
   },
   data() {
     return {
+      minDate: "",
       formData: {
         desc: "",
         date: "",
