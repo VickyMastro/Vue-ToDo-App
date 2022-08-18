@@ -2,7 +2,7 @@
   <div class="modal-note-container">
     <div class="row" style="padding: 5px 30px">
       <div class="col-12 my-3" style="text-align: end">
-        <Calendar :initialDate="formData.date" @setDate="setDate" />
+        <Calendar :initialDate="formData.date" :minDate="minDate" @setDate="setDate" />
       </div>
 
       <div class="col-sm-12 col-md-12">
@@ -36,7 +36,7 @@ import Calendar from "../Calendar.vue";
 
 export default {
   name: "ToDoForm",
-  props: ["formData"],
+  props: ["formData","minDate"],
   methods: {
     setDate(date){
       this.$emit('setValue', 'date', date)
