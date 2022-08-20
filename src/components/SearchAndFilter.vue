@@ -8,9 +8,9 @@
       <input
         type="text"
         class="search-input mx-4"
-        @change="applyFilters"
+        
         v-model="search"
-        placeholder="Buscar nota"
+        placeholder="Buscar..."
       />
       <!-- ---------------------- boton filtros ----------------------->
       <button
@@ -56,35 +56,37 @@
       </button>
     </div>
     <!-- ---------------------- desplegable con botones ----------------------->
-    <div class="collapse col-md-12" id="collapseExample">
-      <div class="row d-flex justify-content-around">
-        <div class="col-md-4">
+    <div class="collapse col-md-12 mt-2" id="collapseExample">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-3">
+          <Calendar :initialDate="date" @setDate="setDate" />
+        </div>
+        <!-- --------------------------------------------->
+        <div class="col-md-3">
           <select
             class="form-select filter-input"
             @change="applyFilters"
             v-model="listOption"
             aria-label="Default select example"
           >
-            <option hidden value="">Filtro por nota o toDo</option>
-            <option value="nota">Nota</option>
-            <option value="toDo">ToDo</option>
+            <option hidden value="">Filtro por notas o toDos</option>
+            <option value="all">Notas y ToDos</option>
+            <option value="nota">Notas</option>
+            <option value="toDo">ToDos</option>
           </select>
         </div>
         <!-- --------------------------------------------->
-        <div class="col-md-4">
-          <Calendar :initialDate="date" @setDate="setDate" />
-        </div>
-        <!-- --------------------------------------------->
-        <div class="col-md-4">
+        <div class="col-md-3">
           <select
             class="form-select filter-input"
             @change="applyFilters"
             v-model="isComplete"
             aria-label="Default select example"
+            v-show="listOption==='toDo'"
           >
             <option hidden value="">ToDo completo o incompleto</option>
-            <option value="completo">Completos</option>
-            <option value="incompleto">Incompletos</option>
+            <option :value="true">Completos</option>
+            <option :value="false">Incompletos</option>
           </select>
         </div>
       </div>
@@ -112,7 +114,7 @@ export default {
 
       listOption: "",
       date: "",
-      isComplete: false,
+      isComplete: "",
       search: "",
     };
   },
@@ -126,10 +128,14 @@ export default {
       }
       this.optionSelect = "";
     },
+    search(){
+      this.applyFilters()
+    }
   },
   methods: {
     setDate(date) {
       this.date = date;
+      this.applyFilters()
     },
 
     applyFilters() {

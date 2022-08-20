@@ -16,6 +16,7 @@ export default {
   async mounted(){
    await this.actualizar()
   },
+  props: ['filters'],
   data(){
     return {
       toDos: []
@@ -27,13 +28,18 @@ export default {
   methods: {
     async actualizar(){
       try {
-      this.toDos = await ToDosRepository.getToDos(this.getUser)
-    } catch (error) {
-      this.$toast.error('No se encontraron toDos',{
-        position: 'top-right',
-        duration: 3000
-      })
-    }},
+        this.toDos = await ToDosRepository.getToDos(this.getUser, this.filters)
+      } catch (error) {
+        this.$toast.error('No se encontraron toDos',{
+          position: 'top-right',
+          duration: 3000,
+        });
+      }},
+  },
+  watch: {
+    async filters(){
+      await this.actualizar()
+    }
   },
   components: {
     CardToDo,

@@ -3,9 +3,9 @@ import axios from "axios";
 const BASEURL = process.env.VUE_APP_BASEURL;
 
 export default {
-    getToDos: async (user) => {
+    getToDos: async (user, filters) => {
         try {
-            const filters = {userUID: user.uid}
+            filters.userUID= user.uid
             const response = await axios.get(`${BASEURL}/todos?filters=${JSON.stringify(filters)}`)
 
             return response.data
