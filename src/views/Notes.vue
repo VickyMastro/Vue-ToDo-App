@@ -30,6 +30,7 @@ export default {
     async actualizar() {
       try {
         this.notes = await NotesRepository.getNotes(this.getUser, this.filters);
+        this.$emit("countNotes", "notes", this.notes.length > 0);
       } catch (error) {
         this.$toast.error("No se encontraron notas", {
           position: "top-right",
@@ -41,7 +42,7 @@ export default {
   watch: {
     async filters(){
       await this.actualizar()
-    }
+    },
   },
   components: {
     CardNote,

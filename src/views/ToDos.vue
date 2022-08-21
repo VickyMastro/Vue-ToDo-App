@@ -29,6 +29,7 @@ export default {
     async actualizar(){
       try {
         this.toDos = await ToDosRepository.getToDos(this.getUser, this.filters)
+        this.$emit('countToDos', 'toDos', this.toDos.length > 0)
       } catch (error) {
         this.$toast.error('No se encontraron toDos',{
           position: 'top-right',
