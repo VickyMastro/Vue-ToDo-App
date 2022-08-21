@@ -6,7 +6,7 @@
   >
     <template v-slot="{ inputValue, togglePopover }">
       <div
-        class="d-inline"
+        class="d-flex align-items-center justify-content-center"
         style="
           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
           border-radius: 10px;
@@ -54,7 +54,7 @@ export default {
 <style scoped>
 .button-calendar {
   width: 45px;
-  height: 40px;
+  height: 30px;
 
   background: inherit;
 
@@ -69,9 +69,9 @@ img {
 
 .input-calendar {
   width: 150px;
-  height: 30px;
+  height: 25px;
 
-  font-size: 15px;
+  font-size: 18px;
   text-align: center;
   vertical-align: middle;
 
