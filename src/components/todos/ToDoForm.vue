@@ -1,7 +1,7 @@
 <template>
   <div class="modal-note-container">
     <div class="row" style="padding: 5px 30px">
-      <div class="col-12 my-3" style="text-align: end">
+      <div class="col-12 my-3" style="width: 30%; margin-left: auto;">
         <Calendar :initialDate="formData.date" :minDate="minDate" @setDate="setDate" />
       </div>
 
@@ -20,11 +20,6 @@
           @input="$emit('setValue', 'desc', $event.target.value)"
         ></textarea>
       </div>
-
-      <!-- <div class="row mt-3">
-        <p>Prioridad: alta / baja</p>
-      </div> -->
-
       <!-- BOTONES -->
       <slot></slot>
     </div>
