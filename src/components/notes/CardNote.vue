@@ -13,7 +13,7 @@
             {{ note.title }}
           </b>
         </h5>
-        <p class="card-text">{{ note.desc | caracteres}}</p>
+        <p class="card-text" style="white-space: pre-line;">{{ note.desc | caracteres}}</p>
         <div class="text-end">
           <a href="#" class="btn" @click="editNote">Editar</a>
         </div>
