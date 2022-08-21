@@ -58,11 +58,11 @@
     <!-- ---------------------- desplegable con botones ----------------------->
     <div class="collapse col-md-12 mt-2" id="collapseExample">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-3">
+        <div class="col-8 col-md-3 col-lg-2 pt-2 mt-1">
           <Calendar :initialDate="date" @setDate="setDate" />
         </div>
         <!-- --------------------------------------------->
-        <div class="col-md-3">
+        <div class="col-8 col-md-3 col-lg-2 pt-2">
           <select
             class="form-select filter-input"
             @change="applyFilters"
@@ -76,7 +76,7 @@
           </select>
         </div>
         <!-- --------------------------------------------->
-        <div class="col-md-3">
+        <div class="col-8 col-md-3 col-lg-2 pt-2">
           <select
             class="form-select filter-input"
             @change="applyFilters"
@@ -99,6 +99,7 @@ import CreateNoteModal from "@/components/notes/CreateNoteModal.vue";
 import CreateToDoModal from "@/components/todos/CreateToDoModal.vue";
 import PhoneModalOptions from "@/components/PhoneModalOptions.vue";
 import Calendar from "../components/Calendar.vue";
+import moment from "moment";
 
 export default {
   name: "SearchAndFilter",
@@ -139,10 +140,14 @@ export default {
     },
 
     applyFilters() {
+      let formatDate = "";
+      if (this.date) {
+        formatDate = moment(this.date).format("YYYY-MM-DD");
+      } 
       this.$emit("filters", {
         search: this.search,
         listOption: this.listOption,
-        date: this.date,
+        date: formatDate,
         isComplete: this.isComplete,
       });
     },
