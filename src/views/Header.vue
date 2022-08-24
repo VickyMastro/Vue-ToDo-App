@@ -25,9 +25,9 @@
           data-bs-placement="bottom"
           title="Editar datos del usuario"
         >
-          {{userName}}
+          {{ userName }}
           <img
-            src="@/assets/user.png"
+            :src="url"
             alt="Icono de usuario"
             width="25"
             height="25"
@@ -44,11 +44,23 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Header",
+  data() {
+    return {
+      avatar: "user.png",
+    };
+  },
   computed: {
     ...mapGetters(["getUser"]),
-    
-    userName(){
-      return !this.getUser ? '' : this.getUser.displayName
+
+    userName() {
+      return !this.getUser ? "" : this.getUser.displayName;
+    },
+
+    url() {
+      let images = require.context("../assets/");
+      return !this.getUser || !this.getUser?.photoURL
+        ? images(`./${this.avatar}`)
+        : images(`./${this.getUser.photoURL}`);
     },
   },
 };
