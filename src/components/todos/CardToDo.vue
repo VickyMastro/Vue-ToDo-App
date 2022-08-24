@@ -61,12 +61,8 @@ export default {
     },
     async isDoneChange(value){
       try{
-        await ToDosRepository.updateToDo(this.toDo.id, {...this.toDo, date: new Date(),isDone : value})
+        await ToDosRepository.updateToDo(this.toDo.id, {isDone : value})
 
-        this.$toast.success('El toDo fue completado',{
-          position: 'top-right',
-          duration: 3000
-        })
       } catch (error) {
         this.$toast.error('No se pudo editar el estado del toDo',{
           position: 'top-right',
