@@ -1,8 +1,12 @@
 <template>
   <div class="modal-note-container">
     <div class="row" style="padding: 5px 30px">
-      <div class="col-12 my-3" style="width: 30%; margin-left: auto;">
-        <Calendar :initialDate="formData.date" :minDate="minDate" @setDate="setDate" />
+      <div class="col-12 my-3" style="margin-left: auto" :style="calendarWidth">
+        <Calendar
+          :initialDate="formData.date"
+          :minDate="minDate"
+          @setDate="setDate"
+        />
       </div>
 
       <div class="col-sm-12 col-md-12">
@@ -35,8 +39,13 @@ export default {
   methods: {
     setDate(date){
       this.$emit('setValue', 'date', date)
-    }, 
     },
+  },
+  computed: {
+    calendarWidth(){
+      return document.documentElement.clientWidth < 401 ? 'width: 70%' : 'width: 30%'
+    }
+  },
   components: {
     Calendar,
   },
