@@ -8,11 +8,12 @@
         </button>
       </div>
       <div class="card-body">
-        <h5 class="card-title">
+        <h5>
           <b>
             {{ note.title }}
           </b>
         </h5>
+        <hr style="width: 80%; margin-left: 10%; margin-top: 0px; margin-bottom: 5px;">
         <p class="card-text" style="white-space: pre-line;">{{ note.desc | caracteres}}</p>
         <div class="text-end">
           <a href="#" class="btn" @click="editNote">Editar</a>
