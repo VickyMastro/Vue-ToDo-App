@@ -7,10 +7,43 @@
 
     <div class="inputs-container">
       <div class="input-container row">
-        <div class="col">
-          <label for="userAvatar" class="col-sm-2 col-form-label"
-            >Avatar:</label
-          >
+        <div class="col-sm-2">
+          <label for="userAvatar" class="col-form-label">Avatar:</label>
+        </div>
+        <div class="col-10 col-md-8 d-flex justify-content-around">
+          <div class="avatars-container col-sm-2">
+            <img
+              @click="changeAvatar('female.svg')"
+              src="../../assets/female.svg"
+              class="avatars rounded-circle"
+              :class="{'avatar' : userData.avatar === 'female.svg'}"
+              alt="Female avatar"
+              width="55px"
+              height="55px"
+            />
+          </div>
+          <div class="avatars-container col-sm-2">
+            <img
+              @click="changeAvatar('male.svg')"
+              src="../../assets/male.svg"
+              class="avatars rounded-circle"
+              :class="{'avatar' : userData.avatar === 'male.svg'}"
+              alt="Male avatar"
+              width="55px"
+              height="55px"
+            />
+          </div>
+          <div class="avatars-container col-sm-2">
+            <img
+              @click="changeAvatar('x.svg')"
+              src="../../assets/x.svg"
+              class="avatars rounded-circle"
+              :class="{'avatar' : userData.avatar === 'x.svg'}"
+              alt="x avatar"
+              width="55px"
+              height="55px"
+            />
+          </div>
         </div>
       </div>
       <!-- -------------------------------Name----------------------------------- -->
@@ -183,6 +216,11 @@ export default {
     };
   },
   methods: {
+    async changeAvatar(selectedAvatar){
+      this.userData.avatar = selectedAvatar
+      await this.$store.dispatch("doUpdateProfile", this.userData);
+    },
+
     async signOff() {
       await this.$store.dispatch("doSignOut");
       this.$router.push("Login");
@@ -247,16 +285,13 @@ export default {
   max-width: 500px;
   height: 250px;
 }
-
 .inputs-container {
   margin-top: 35px;
   margin-left: 50px;
 }
-
 label {
   text-decoration-line: underline;
 }
-
 .input-container {
   margin-top: 25px;
 }
@@ -265,7 +300,15 @@ input {
   width: 190px;
   /* margin-left: 40px; */
 }
-
+.avatars-container{
+  cursor: pointer;
+}
+.avatar{
+  border: 2px solid rgba(0, 0, 0, 0.35);
+}
+.avatars{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 .btn-grad {
   margin: 30px 10px;
   padding: 10px 20px;

@@ -62,10 +62,10 @@ const store = new Vuex.Store({
       context.commit("setUser", null);
     },
 
-    async doUpdateProfile(context, { name, photoURL }) {
+    async doUpdateProfile(context, { name, avatar }) {
       await updateProfile(auth.currentUser, {
         displayName: name,
-        photoURL: photoURL,
+        photoURL: avatar,
       });
       context.commit("setUser", auth.currentUser);
     },
@@ -95,7 +95,7 @@ const store = new Vuex.Store({
       await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, {
         displayName: name,
-        photoURL: "2.svg",
+        photoURL: "user.png",
       });
       context.commit("setUser", auth.currentUser);
     },
